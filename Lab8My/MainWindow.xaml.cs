@@ -63,22 +63,27 @@ namespace Lab8My
             if(dGrid.SelectedItems.Count != 1)
             {
                 MessageBox.Show("Выберите один автоомбиль");
+                return;
             }
+            //MessageBox.Show("автомобиль выбран");
             Car car = dGrid.SelectedItem as Car;
             if (car == null) return;
             WindowEdit windowEdit = new WindowEdit(car);
+            if (windowEdit.ShowDialog() == true)  // Изменено: == true
+            {
 
-            var editedCar = windowEdit.EditedCar;
+                var editedCar = windowEdit.EditedCar;
 
-            car.Name = editedCar.Name;
-            car.Model = editedCar.Model;
-            car.Vin = editedCar.Vin;
-            car.Number = editedCar.Number;
-            car.CarId = editedCar.CarId;
+                car.Name = editedCar.Name;
+                car.Model = editedCar.Model;
+                car.Vin = editedCar.Vin;
+                car.Number = editedCar.Number;
+                car.CarId = editedCar.CarId;
 
-            context.Entry(car).State = EntityState.Modified;
-            context.SaveChanges();
-            dGrid.Items.Refresh();
+                context.Entry(car).State = EntityState.Modified;
+                context.SaveChanges();
+                dGrid.Items.Refresh();
+            }
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
